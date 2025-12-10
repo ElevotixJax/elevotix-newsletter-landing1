@@ -1,0 +1,11 @@
+{
+  "version": 2,
+  "builds": [
+    { "src": "newsletterlanding.html", "use": "@vercel/static" },
+    { "src": "js/**", "use": "@vercel/static" },
+    { "src": "**/*.{jpg,jpeg,png,webp,gif,svg,ico}" , "use": "@vercel/static" }
+  ],
+  "routes": [
+    { "src": "/(.*)", "dest": "/newsletterlanding.html" }
+  ]
+}

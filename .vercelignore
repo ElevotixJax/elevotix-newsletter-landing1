@@ -1,0 +1,20 @@
+# Ignore local config and dev files
+.vscode/
+.env
+.env.*
+node_modules/
+*.psd
+*.ai
+.DS_Store
+Thumbs.db
+coverage/
+
+# Vercel/CI artifacts
+.vercel/
+
+# Optional large assets you may not want uploaded
+*.zip
+*.tar.gz
+
+# Keep README and necessary files
+!README.md
