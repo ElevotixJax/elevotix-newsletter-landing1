@@ -10,13 +10,14 @@
         :root{
             --bg:#030306;
             --card:#090c10;
-            --muted:#70707e;
+            --muted:#ffffff;
             --accent1:#fd5a37;
             --accent2:#fcb900;
             --glass: rgba(255,255,255,0.03);
             --radius:16px;
             --max-width:1100px;
             --min-gap:18px;
+            --header-offset:96px;
             color-scheme: dark;
         }
         *{box-sizing:border-box}
@@ -29,29 +30,30 @@
             -moz-osx-font-smoothing:grayscale;
             line-height:1.45;
         }
+        html,body{height:100%}
         .container{max-width:var(--max-width);margin:0 auto;padding:28px;}
-        header{position:fixed;left:0;right:0;top:0;background:linear-gradient(180deg, rgba(3,3,6,.85), rgba(3,3,6,.6));backdrop-filter: blur(6px);border-bottom:1px solid rgba(255,255,255,.04);padding:14px 28px;z-index:40}
+        header{position:fixed;left:0;right:0;top:0;background:linear-gradient(180deg, rgba(3,3,6,.85), rgba(3,3,6,.6));backdrop-filter: blur(6px);border-bottom:1px solid rgba(255,255,255,.04);padding:12px 20px;z-index:40}
         header .brand{display:flex;align-items:center;justify-content:center;gap:12px}
         header img{height:28px;display:block}
-        main{padding-top:96px}
+        main{padding-top:var(--header-offset)}
         .hero{display:grid;place-items:center;text-align:center;padding:48px 12px 64px;position:relative;overflow:hidden}
         .glow{position:absolute;left:50%;transform:translateX(-50%);width:600px;height:600px;background:radial-gradient(circle at center, rgba(252,185,24,.18), transparent 30%);filter:blur(120px);pointer-events:none;top:40px}
         h1{font-size:clamp(28px,6vw,56px);margin:0;font-weight:800;line-height:1.02}
-        .subtitle{color:#fff;max-width:780px;margin:18px auto 26px;font-size:1.05rem}
+        .subtitle{color:#fff;max-width:780px;margin:18px auto 26px;font-size:clamp(.95rem,1.6vw,1.05rem)}
         .form{display:flex;gap:12px;flex-wrap:wrap;justify-content:center;max-width:560px;margin:0 auto}
         .form input[type="email"]{
-            flex:1;min-width:220px;padding:14px 16px;border-radius:12px;border:1px solid rgba(255,255,255,.06);
-            background:var(--card);color:#fff;outline:none;font-size:1rem
+            flex:1;min-width:180px;padding:14px 16px;border-radius:12px;border:1px solid rgba(255,255,255,.06);
+            background:var(--card);color:#fff;outline:none;font-size:1rem;max-width:100%;
         }
         .btn{
             background:linear-gradient(90deg,var(--accent1),var(--accent2));
             color:#fff;border:none;padding:12px 18px;border-radius:12px;font-weight:600;cursor:pointer;
         }
-        .muted{color:var(--muted);font-size:.92rem}
+        .muted{color:#ffffff;font-size:.92rem}
         section{padding:56px 12px}
         .cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:18px;max-width:980px;margin:0 auto}
         .card{background:linear-gradient(180deg, rgba(255,255,255,0.02), transparent);border-radius:12px;padding:18px;border:1px solid rgba(255,255,255,.03)}
-        .card img{width:100%;height:160px;object-fit:cover;border-radius:8px;margin-bottom:12px}
+        .card img{width:100%;height:auto;aspect-ratio:16/9;object-fit:cover;border-radius:8px;margin-bottom:12px;display:block}
         .card h3{margin:6px 0 10px;font-size:1.15rem}
         .stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:18px;max-width:980px;margin:0 auto}
         .stat{background:var(--card);padding:18px;border-radius:12px;text-align:center;border:1px solid rgba(255,255,255,.03)}
@@ -59,12 +61,41 @@
         .reviews{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:18px;max-width:980px;margin:0 auto}
         blockquote{margin:0 0 12px;color:#fff;background:transparent}
         .footer{border-top:1px solid rgba(255,255,255,.04);padding-top:18px;text-align:center;color:var(--muted)}
+        /* Stack reviews vertically on small screens */
+        @media (max-width:768px){
+            .reviews{grid-template-columns:1fr}
+        }
+        /* Stack stats vertically on small screens */
+        @media (max-width:768px){
+            .stats{grid-template-columns:1fr}
+        }
         /* small helpers */
         .center{text-align:center}
         .pill{display:inline-block;padding:6px 10px;border-radius:999px;font-weight:600}
         @media (max-width:520px){header{padding:10px 12px}.container{padding:12px}}
+        /* Mobile / tablet adjustments */
+        @media (max-width:900px){
+            :root{--header-offset:120px}
+            main{padding-top:var(--header-offset)}
+            .container{padding:12px}
+            .form{flex-direction:column;align-items:stretch}
+            .form input[type="email"], .form .btn{width:100%}
+            .glow{width:420px;height:420px;filter:blur(90px);top:20px}
+            .card img{aspect-ratio:16/9;height:auto}
+            .subtitle{font-size:1rem}
+        }
+
+        /* Desktop adjustments */
+        @media (min-width:900px){
+            :root{--header-offset:96px}
+            main{padding-top:var(--header-offset)}
+            .form{flex-direction:row;align-items:center}
+            .form input[type="email"]{min-width:220px}
+            .btn{width:auto}
+            .card img{height:160px}
+        }
         /* Carousel styles for the .cards area on small screens; reverts to grid on wide screens */
-        .cards.carousel{position:relative}
+        .cards.carousel{position:relative;max-width:980px;margin:0 auto}
         .carousel-track-wrapper{overflow:hidden}
         .carousel-track{display:flex;gap:18px;transition:transform .36s cubic-bezier(.22,.9,.3,1)}
         .carousel-track .slide{min-width:100%;flex:0 0 100%;box-sizing:border-box}
@@ -100,7 +131,7 @@
         <div class="hero" style="background:linear-gradient(135deg, #030306 0%, #1a0f00 50%, #2d1a00 100%)">
             <div class="glow" aria-hidden="true"></div>
             <div class="container center">
-                <h1>Elevate Your Real Estate <span style="display:block;background:linear-gradient(90deg,var(--accent1),var(--accent2));-webkit-background-clip:text;background-clip:text;color:transparent">Marketing Game</span></h1>
+                <h1>Elevate Your Real Estate <span style="display:block;color:var(--accent1)">Marketing Game</span></h1>
                 <p class="subtitle">Join thousands of Tennessee's top real estate professionals. Get monthly insights, agent spotlights, and marketing strategies delivered straight to your inbox.</p>
 
                 <form id="signup" class="form" onsubmit="handleFormSubmit(event)">
@@ -111,7 +142,7 @@
             </div>
         </div>
 
-        <section aria-labelledby="inside">
+        <section aria-labelledby="inside" style="padding:32px 12px">
             <div class="container center">
                 <h2 id="inside">Inside Each Issue</h2>
                 <p class="muted" style="max-width:780px;margin:8px auto 24px">Every month, we deliver actionable content to help you stand out in Tennessee's competitive real estate market.</p>
@@ -152,7 +183,7 @@
             </div>
         </section>
 
-        <section aria-labelledby="stats" style="background:linear-gradient(180deg, rgba(255,255,255,0.01), transparent);">
+        <section aria-labelledby="stats" style="background:linear-gradient(180deg, rgba(255,255,255,0.01), transparent);padding:32px 12px">
             <div class="container center">
                 <div class="stats" role="list">
                     <div class="stat" role="listitem"><div class="big">238K+</div><div class="muted">Photos Taken</div></div>
@@ -171,9 +202,9 @@
                 <div class="reviews" role="list">
                     <div class="card" role="listitem">
                         <blockquote>"I can't imagine ever working with another marketing content/photo/videography company for my listing photos and videos... it's the best they have seen!"</blockquote>
-                        <div style="display:flex;gap:12px;align-items:center">
+                        <div style="display:flex;gap:12px;align-items:center;flex-direction:column">
                             <img src="Ivey.jpg" alt="Ivey Hayes" style="width:44px;height:44px;border-radius:999px;object-fit:cover">
-                            <div style="text-align:left">
+                            <div style="text-align:center">
                                 <div style="font-weight:700">Ivey Hayes</div>
                                 <div class="muted" style="font-size:.92rem">Real Estate Agent</div>
                             </div>
@@ -182,9 +213,9 @@
 
                     <div class="card" role="listitem">
                         <blockquote>"They did an exceptional job! Virtual tour, drone video — best quality for a great price."</blockquote>
-                        <div style="display:flex;gap:12px;align-items:center">
+                        <div style="display:flex;gap:12px;align-items:center;flex-direction:column">
                             <div style="width:44px;height:44px;border-radius:999px;background:linear-gradient(90deg,var(--accent1),var(--accent2));display:flex;align-items:center;justify-content:center;font-weight:700;font-size:1.5rem;font-style:italic">B</div>
-                            <div style="text-align:left">
+                            <div style="text-align:center">
                                 <div style="font-weight:700">Beth Clark</div>
                                 <div class="muted" style="font-size:.92rem">Homeowner</div>
                             </div>
@@ -193,9 +224,9 @@
 
                     <div class="card" role="listitem">
                         <blockquote>"Professional, timely, and visionary. My clients are obsessed with their work."</blockquote>
-                        <div style="display:flex;gap:12px;align-items:center">
-                            <img src="janet .webp" alt="Janet Goins" style="width:44px;height:44px;border-radius:999px;object-fit:cover">
-                            <div style="text-align:left">
+                        <div style="display:flex;gap:12px;align-items:center;flex-direction:column">
+                            <img src="janet.webp" alt="Janet Goins" style="width:44px;height:44px;border-radius:999px;object-fit:cover">
+                            <div style="text-align:center">
                                 <div style="font-weight:700">Janet Goins</div>
                                 <div class="muted" style="font-size:.92rem">Real Estate Agent</div>
                             </div>
@@ -205,7 +236,7 @@
             </div>
         </section>
 
-        <section style="padding-bottom:80px">
+        <section style="padding-bottom:80px;background:linear-gradient(135deg, #030306 0%, #1a0f00 50%, #2d1a00 100%)">
             <div class="container center">
                 <h2>Ready to Elevate Your Marketing?</h2>
                 <p class="muted" style="max-width:680px;margin:8px auto 18px">Join the newsletter Tennessee's top agents trust for monthly inspiration and actionable insights.</p>
@@ -227,6 +258,7 @@
         </div>
     </footer>
 
+    <script src="js/signup.js"></script>
     <script>
         // Unified form handler
         function handleFormSubmit(e){
@@ -287,15 +319,31 @@
             function stopAuto(){ if(autoplayId) clearInterval(autoplayId); autoplayId = null; }
             function resetAuto(){ stopAuto(); startAuto(); }
 
+            function checkScreenSize(){
+                if(window.innerWidth >= 900){
+                    stopAuto();
+                    autoplay = false;
+                    prevBtn.style.display = 'none';
+                    nextBtn.style.display = 'none';
+                    dotsWrap.style.display = 'none';
+                } else {
+                    autoplay = true;
+                    prevBtn.style.display = 'flex';
+                    nextBtn.style.display = 'flex';
+                    dotsWrap.style.display = 'flex';
+                    resetAuto();
+                }
+            }
+
             prevBtn.addEventListener('click', prev);
             nextBtn.addEventListener('click', next);
-            window.addEventListener('resize', ()=>{ layout(); });
+            window.addEventListener('resize', ()=>{ layout(); checkScreenSize(); });
             carousel.addEventListener('mouseenter', stopAuto);
             carousel.addEventListener('mouseleave', startAuto);
 
             buildDots();
             layout();
-            startAuto();
+            checkScreenSize();
         })();
     </script>
 </body>
