@@ -260,15 +260,72 @@
 
     <script src="js/signup.js"></script>
     <script>
-        // Unified form handler
-        function handleFormSubmit(e){
+        // Mailchimp API configuration
+        // Backend API endpoint (credentials hidden on server)
+        const API_ENDPOINT = '/api/subscribe';
+
+        // Unified form handler with secure backend proxy
+        async function handleFormSubmit(e){
             e.preventDefault();
             const form = e.target;
-            const email = form.querySelector('input[type="email"]').value;
+            const emailInput = form.querySelector('input[type="email"]');
+            const email = emailInput.value.trim();
+            
             if(!email) return;
-            console.log('Newsletter subscription:', email);
-            alert("Thanks — we'll send the next issue to " + email + ".");
-            form.reset();
+
+            // Get the submit button
+            const btn = form.querySelector('button[type="submit"]');
+            const originalText = btn.textContent;
+            
+            // Show loading state
+            btn.disabled = true;
+            btn.textContent = 'Subscribing...';
+            btn.setAttribute('aria-busy','true');
+
+            try {
+                // Call secure backend proxy instead of direct API
+                const response = await fetch(API_ENDPOINT, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        email: email
+                    })
+                });
+
+                if(response.ok){
+                    // Success
+                    btn.textContent = 'Subscribed! ✓';
+                    btn.style.background = 'linear-gradient(90deg, #22c55e, #16a34a)';
+                    emailInput.value = '';
+                    form.reset();
+                    
+                    // Revert after 2 seconds
+                    setTimeout(()=>{
+                        btn.disabled = false;
+                        btn.textContent = originalText;
+                        btn.style.background = '';
+                        btn.removeAttribute('aria-busy');
+                    }, 2000);
+                } else {
+                    const error = await response.json();
+                    throw new Error(error.detail || error.error || 'Subscription failed');
+                }
+            } catch(err){
+                // Error handling
+                btn.textContent = 'Error! Try again';
+                btn.style.background = 'linear-gradient(90deg, #ef4444, #dc2626)';
+                console.error('Subscription error:', err);
+                
+                // Revert after 2 seconds
+                setTimeout(()=>{
+                    btn.disabled = false;
+                    btn.textContent = originalText;
+                    btn.style.background = '';
+                    btn.removeAttribute('aria-busy');
+                }, 2000);
+            }
         }
 
         // Carousel JS

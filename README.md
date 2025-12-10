@@ -1,34 +1,79 @@
 # Elevotix Newsletter Landing — Vercel Deployment
 
-This is a static landing page. Use Vercel to deploy quickly.
+This landing page includes a secure backend API for Mailchimp integration.
 
-Quick deploy (CLI):
+## Setup: Add Environment Variables
 
-1. Install the Vercel CLI (if not installed):
+Before deploying, set your Mailchimp credentials in Vercel.
+
+**Option 1: Using Vercel CLI**
 
 ```bash
-npm i -g vercel
+vercel env add MCKEY
+# Paste your Mailchimp API key
+
+vercel env add MCLID
+# Paste your Mailchimp List ID
+
+vercel env add MCDC
+# Paste your Mailchimp datacenter (e.g., us5)
 ```
 
-2. Log in and deploy:
+**Option 2: Vercel Dashboard**
+
+1. Go to your Vercel project dashboard
+2. Settings > Environment Variables
+3. Add three variables:
+   - `MCKEY` (Mailchimp API Key)
+   - `MCLID` (Mailchimp List ID)
+   - `MCDC` (Mailchimp Datacenter)
+
+See `.env.example` for reference.
+
+## Deploy
+
+**CLI deployment:**
 
 ```bash
+npm install -g vercel
 vercel login
-vercel           # follow prompts (first deploy creates a project)
-vercel --prod    # promote a deployment to production
+vercel --prod
 ```
 
-Notes:
-- The project is configured as a static site in `vercel.json` and routes the root path to `newsletterlanding.html`.
-- Static assets (images, `js/`) are included automatically.
-- If you prefer GitHub integration, connect the repo in the Vercel dashboard and set the production branch to `main`.
+**GitHub integration:**
 
-Local preview:
+1. Connect your GitHub repo in the Vercel dashboard
+2. Set production branch to `main`
+3. Vercel auto-deploys on push
+
+## Local Testing
+
+1. Create `.env` file with your Mailchimp credentials:
 
 ```bash
-# Simple static preview using Python
-python3 -m http.server 8000
-# open http://localhost:8000/newsletterlanding.html
+cp .env.example .env
+# Edit .env with your actual credentials
 ```
 
-If you'd like I can add a small `package.json` or a GitHub Action that deploys to Vercel on push. Request it and I'll add it.
+2. Install Node dependencies and run the API:
+
+```bash
+npm install
+node api.js
+```
+
+3. In another terminal, run the static server:
+
+```bash
+python3 -m http.server 8000
+```
+
+4. Visit `http://localhost:8000/newsletterlanding.html` and test the signup forms
+
+## Architecture
+
+- **Frontend:** Static HTML/CSS/JS (no secrets exposed)
+- **Backend:** `api.js` Node.js proxy that handles Mailchimp API calls securely
+- **Vercel Config:** `vercel.json` routes `/api/subscribe` to the Node.js function
+- **Secrets:** Environment variables stored in Vercel (never committed to git)
+
