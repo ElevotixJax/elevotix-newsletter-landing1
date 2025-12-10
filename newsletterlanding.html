@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Elevotix Newsletter | Elevate Your Real Estate Marketing</title>
+    <meta name="description" content="Subscribe to Elevotix's monthly newsletter for agent spotlights, featured listings, and expert marketing tips." />
+    <link rel="icon" href="/favicon.ico" />
+    <style>
+        :root{
+            --bg:#030306;
+            --card:#090c10;
+            --muted:#70707e;
+            --accent1:#fd5a37;
+            --accent2:#fcb900;
+            --glass: rgba(255,255,255,0.03);
+            --radius:16px;
+            --max-width:1100px;
+            --min-gap:18px;
+            color-scheme: dark;
+        }
+        *{box-sizing:border-box}
+        body{
+            margin:0;
+            font-family:Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+            background:var(--bg);
+            color:#fff;
+            -webkit-font-smoothing:antialiased;
+            -moz-osx-font-smoothing:grayscale;
+            line-height:1.45;
+        }
+        .container{max-width:var(--max-width);margin:0 auto;padding:28px;}
+        header{position:fixed;left:0;right:0;top:0;background:linear-gradient(180deg, rgba(3,3,6,.85), rgba(3,3,6,.6));backdrop-filter: blur(6px);border-bottom:1px solid rgba(255,255,255,.04);padding:14px 28px;z-index:40}
+        header .brand{display:flex;align-items:center;justify-content:center;gap:12px}
+        header img{height:28px;display:block}
+        main{padding-top:96px}
+        .hero{display:grid;place-items:center;text-align:center;padding:48px 12px 64px;position:relative;overflow:hidden}
+        .glow{position:absolute;left:50%;transform:translateX(-50%);width:600px;height:600px;background:radial-gradient(circle at center, rgba(252,185,24,.18), transparent 30%);filter:blur(120px);pointer-events:none;top:40px}
+        h1{font-size:clamp(28px,6vw,56px);margin:0;font-weight:800;line-height:1.02}
+        .subtitle{color:#fff;max-width:780px;margin:18px auto 26px;font-size:1.05rem}
+        .form{display:flex;gap:12px;flex-wrap:wrap;justify-content:center;max-width:560px;margin:0 auto}
+        .form input[type="email"]{
+            flex:1;min-width:220px;padding:14px 16px;border-radius:12px;border:1px solid rgba(255,255,255,.06);
+            background:var(--card);color:#fff;outline:none;font-size:1rem
+        }
+        .btn{
+            background:linear-gradient(90deg,var(--accent1),var(--accent2));
+            color:#fff;border:none;padding:12px 18px;border-radius:12px;font-weight:600;cursor:pointer;
+        }
+        .muted{color:var(--muted);font-size:.92rem}
+        section{padding:56px 12px}
+        .cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:18px;max-width:980px;margin:0 auto}
+        .card{background:linear-gradient(180deg, rgba(255,255,255,0.02), transparent);border-radius:12px;padding:18px;border:1px solid rgba(255,255,255,.03)}
+        .card img{width:100%;height:160px;object-fit:cover;border-radius:8px;margin-bottom:12px}
+        .card h3{margin:6px 0 10px;font-size:1.15rem}
+        .stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:18px;max-width:980px;margin:0 auto}
+        .stat{background:var(--card);padding:18px;border-radius:12px;text-align:center;border:1px solid rgba(255,255,255,.03)}
+        .stat .big{font-size:1.6rem;font-weight:800;background:linear-gradient(90deg,var(--accent1),var(--accent2));-webkit-background-clip:text;background-clip:text;color:transparent}
+        .reviews{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:18px;max-width:980px;margin:0 auto}
+        blockquote{margin:0 0 12px;color:#fff;background:transparent}
+        .footer{border-top:1px solid rgba(255,255,255,.04);padding-top:18px;text-align:center;color:var(--muted)}
+        /* small helpers */
+        .center{text-align:center}
+        .pill{display:inline-block;padding:6px 10px;border-radius:999px;font-weight:600}
+        @media (max-width:520px){header{padding:10px 12px}.container{padding:12px}}
+        /* Carousel styles for the .cards area on small screens; reverts to grid on wide screens */
+        .cards.carousel{position:relative}
+        .carousel-track-wrapper{overflow:hidden}
+        .carousel-track{display:flex;gap:18px;transition:transform .36s cubic-bezier(.22,.9,.3,1)}
+        .carousel-track .slide{min-width:100%;flex:0 0 100%;box-sizing:border-box}
+        .cards.carousel .card{min-width:auto;flex:initial}
+        .carousel-btn{position:absolute;top:50%;transform:translateY(-50%);background:rgba(0,0,0,.36);border:none;color:#fff;width:40px;height:40px;border-radius:999px;display:flex;align-items:center;justify-content:center;cursor:pointer;z-index:10}
+        .carousel-btn:active{transform:translateY(-50%) scale(.98)}
+        .carousel-btn.prev{left:10px}
+        .carousel-btn.next{right:10px}
+        .carousel-dots{display:flex;gap:8px;justify-content:center;margin-top:12px}
+        .carousel-dots button{width:10px;height:10px;border-radius:999px;border:none;background:rgba(255,255,255,.12);cursor:pointer}
+        .carousel-dots button.active{background:linear-gradient(90deg,var(--accent1),var(--accent2));box-shadow:0 0 6px rgba(0,0,0,.4)}
+        @media (min-width:900px){
+            .cards.carousel{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:18px}
+            .carousel-track{display:block}
+            .carousel-track-wrapper{overflow:visible}
+            .cards.carousel .card{min-width:auto;flex:initial}
+            .carousel-btn,.carousel-dots{display:none}
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="brand">
+                <a href="https://www.elevotix.com" target="_blank" rel="noopener noreferrer">
+                    <img src="https://elevotix.com/wp-content/uploads/2025/02/WHITE_medium.png" alt="Elevotix logo">
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <div class="hero" style="background:linear-gradient(135deg, #030306 0%, #1a0f00 50%, #2d1a00 100%)">
+            <div class="glow" aria-hidden="true"></div>
+            <div class="container center">
+                <h1>Elevate Your Real Estate <span style="display:block;background:linear-gradient(90deg,var(--accent1),var(--accent2));-webkit-background-clip:text;background-clip:text;color:transparent">Marketing Game</span></h1>
+                <p class="subtitle">Join thousands of Tennessee's top real estate professionals. Get monthly insights, agent spotlights, and marketing strategies delivered straight to your inbox.</p>
+
+                <form id="signup" class="form" onsubmit="handleFormSubmit(event)">
+                    <input id="email" type="email" placeholder="Enter your email" required aria-label="Email address">
+                    <button class="btn" type="submit">Subscribe Free</button>
+                </form>
+                <p class="muted" style="margin-top:12px">Join 2,500+ real estate professionals. Unsubscribe anytime.</p>
+            </div>
+        </div>
+
+        <section aria-labelledby="inside">
+            <div class="container center">
+                <h2 id="inside">Inside Each Issue</h2>
+                <p class="muted" style="max-width:780px;margin:8px auto 24px">Every month, we deliver actionable content to help you stand out in Tennessee's competitive real estate market.</p>
+
+                <div class="cards carousel" role="region" aria-label="Inside Each Issue carousel">
+                    <button class="carousel-btn prev" aria-label="Previous slide">‹</button>
+                    <div class="carousel-track-wrapper">
+                        <div class="carousel-track">
+                            <div class="slide">
+                                <article class="card" role="listitem">
+                                    <img src="001-2.jpeg" alt="Agent Spotlight">
+                                    <h3>Agent Spotlight</h3>
+                                    <p class="muted">Discover how top-performing agents are crushing it in their markets — strategies, tactics, and success stories.</p>
+                                </article>
+                            </div>
+
+                            <div class="slide">
+                                <article class="card" role="listitem">
+                                    <img src="Photo-Web-17.jpg" alt="Featured Listing">
+                                    <h3>Featured Listing</h3>
+                                    <p class="muted">See examples of listings that sold fast and above asking price, with photography, staging, and marketing breakdowns.</p>
+                                </article>
+                            </div>
+
+                            <div class="slide">
+                                <article class="card" role="listitem">
+                                    <img src="https://img.youtube.com/vi/mwH4RPCsLDk/maxresdefault.jpg" alt="Marketing Tips">
+                                    <h3>Marketing Tips</h3>
+                                    <p class="muted">Actionable strategies you can implement immediately — social media, video trends, and more.</p>
+                                    <p style="margin-top:10px"><a class="pill" href="https://youtu.be/mwH4RPCsLDk" target="_blank" rel="noopener noreferrer" style="background:linear-gradient(90deg,var(--accent1),var(--accent2));color:#000">Watch Now</a></p>
+                                </article>
+                            </div>
+                        </div>
+                    </div>
+                    <button class="carousel-btn next" aria-label="Next slide">›</button>
+                </div>
+                <div class="carousel-dots" aria-hidden="false" style="margin-top:18px"></div>
+            </div>
+        </section>
+
+        <section aria-labelledby="stats" style="background:linear-gradient(180deg, rgba(255,255,255,0.01), transparent);">
+            <div class="container center">
+                <div class="stats" role="list">
+                    <div class="stat" role="listitem"><div class="big">238K+</div><div class="muted">Photos Taken</div></div>
+                    <div class="stat" role="listitem"><div class="big">$1B+</div><div class="muted">Real Estate Marketed</div></div>
+                    <div class="stat" role="listitem"><div class="big">5,700+</div><div class="muted">Videos Produced</div></div>
+                    <div class="stat" role="listitem"><div class="big">5-Star</div><div class="muted">Rated Service</div></div>
+                </div>
+            </div>
+        </section>
+
+        <section aria-labelledby="reviews">
+            <div class="container center">
+                <h2 id="reviews">Top Producer Reviews</h2>
+                <p class="muted" style="max-width:700px;margin:8px auto 24px">See what top real estate professionals are saying about Elevotix.</p>
+
+                <div class="reviews" role="list">
+                    <div class="card" role="listitem">
+                        <blockquote>"I can't imagine ever working with another marketing content/photo/videography company for my listing photos and videos... it's the best they have seen!"</blockquote>
+                        <div style="display:flex;gap:12px;align-items:center">
+                            <img src="Ivey.jpg" alt="Ivey Hayes" style="width:44px;height:44px;border-radius:999px;object-fit:cover">
+                            <div style="text-align:left">
+                                <div style="font-weight:700">Ivey Hayes</div>
+                                <div class="muted" style="font-size:.92rem">Real Estate Agent</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card" role="listitem">
+                        <blockquote>"They did an exceptional job! Virtual tour, drone video — best quality for a great price."</blockquote>
+                        <div style="display:flex;gap:12px;align-items:center">
+                            <div style="width:44px;height:44px;border-radius:999px;background:linear-gradient(90deg,var(--accent1),var(--accent2));display:flex;align-items:center;justify-content:center;font-weight:700;font-size:1.5rem;font-style:italic">B</div>
+                            <div style="text-align:left">
+                                <div style="font-weight:700">Beth Clark</div>
+                                <div class="muted" style="font-size:.92rem">Homeowner</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card" role="listitem">
+                        <blockquote>"Professional, timely, and visionary. My clients are obsessed with their work."</blockquote>
+                        <div style="display:flex;gap:12px;align-items:center">
+                            <img src="janet .webp" alt="Janet Goins" style="width:44px;height:44px;border-radius:999px;object-fit:cover">
+                            <div style="text-align:left">
+                                <div style="font-weight:700">Janet Goins</div>
+                                <div class="muted" style="font-size:.92rem">Real Estate Agent</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section style="padding-bottom:80px">
+            <div class="container center">
+                <h2>Ready to Elevate Your Marketing?</h2>
+                <p class="muted" style="max-width:680px;margin:8px auto 18px">Join the newsletter Tennessee's top agents trust for monthly inspiration and actionable insights.</p>
+
+                <form id="cta" class="form" onsubmit="handleFormSubmit(event)">
+                    <input type="email" placeholder="Enter your email" required aria-label="Email for elevate">
+                    <button class="btn" type="submit">Elevate Now</button>
+                </form>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <div style="max-width:var(--max-width);margin:0 auto;padding:20px 12px;">
+            <div style="display:flex;align-items:center;gap:12px;justify-content:center">
+                <a href="https://www.elevotix.com" target="_blank" rel="noopener noreferrer"><img src="https://elevotix.com/wp-content/uploads/2025/02/WHITE_medium.png" alt="Elevotix" style="height:20px"></a>
+                <div class="muted" style="font-size:.92rem">© 2025 All rights reserved.</div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Unified form handler
+        function handleFormSubmit(e){
+            e.preventDefault();
+            const form = e.target;
+            const email = form.querySelector('input[type="email"]').value;
+            if(!email) return;
+            console.log('Newsletter subscription:', email);
+            alert("Thanks — we'll send the next issue to " + email + ".");
+            form.reset();
+        }
+
+        // Carousel JS
+        (function(){
+            const carousel = document.querySelector('.cards.carousel');
+            if(!carousel) return;
+            const track = carousel.querySelector('.carousel-track');
+            const slides = Array.from(track.querySelectorAll('.slide'));
+            const prevBtn = carousel.querySelector('.carousel-btn.prev');
+            const nextBtn = carousel.querySelector('.carousel-btn.next');
+            const dotsWrap = carousel.querySelector('.carousel-dots');
+            let index = 0;
+            let slideWidth = slides[0].getBoundingClientRect().width;
+            let autoplay = true;
+            let autoplayId = null;
+
+            function buildDots(){
+                dotsWrap.innerHTML = '';
+                slides.forEach((_,i)=>{
+                    const b = document.createElement('button');
+                    b.setAttribute('aria-label','Go to slide '+(i+1));
+                    b.addEventListener('click', ()=>{ goTo(i); resetAuto(); });
+                    dotsWrap.appendChild(b);
+                });
+                updateDots();
+            }
+
+            function updateDots(){
+                const buttons = Array.from(dotsWrap.children);
+                buttons.forEach((b,i)=> b.classList.toggle('active', i===index));
+            }
+
+            function layout(){
+                slideWidth = slides[0].getBoundingClientRect().width;
+                track.style.transform = `translateX(-${index * slideWidth}px)`;
+            }
+
+            function goTo(i){
+                index = (i + slides.length) % slides.length;
+                track.style.transform = `translateX(-${index * slideWidth}px)`;
+                updateDots();
+            }
+
+            function prev(){ goTo(index-1); resetAuto(); }
+            function next(){ goTo(index+1); resetAuto(); }
+
+            function startAuto(){ if(!autoplay) return; autoplayId = setInterval(()=>{ goTo(index+1); }, 4000); }
+            function stopAuto(){ if(autoplayId) clearInterval(autoplayId); autoplayId = null; }
+            function resetAuto(){ stopAuto(); startAuto(); }
+
+            prevBtn.addEventListener('click', prev);
+            nextBtn.addEventListener('click', next);
+            window.addEventListener('resize', ()=>{ layout(); });
+            carousel.addEventListener('mouseenter', stopAuto);
+            carousel.addEventListener('mouseleave', startAuto);
+
+            buildDots();
+            layout();
+            startAuto();
+        })();
+    </script>
+</body>
+</html>
