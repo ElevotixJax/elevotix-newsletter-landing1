@@ -5,13 +5,15 @@
 const http = require('http');
 const querystring = require('querystring');
 
-// Load from environment variables (set in Vercel dashboard or .env)
-const MAILCHIMP_API_KEY = process.env.MAILCHIMP_API_KEY;
-const MAILCHIMP_LIST_ID = process.env.MAILCHIMP_LIST_ID;
-const MAILCHIMP_DC = process.env.MAILCHIMP_DC || 'us5';
+// Load from environment variables.
+// Prefer GitHub secret names: MCKEY, MCLID, MCDC (these will be provided via GitHub Actions as `${{ secrets.NAME }}`),
+// but fall back to older MAILCHIMP_* names for compatibility.
+const MAILCHIMP_API_KEY = process.env.MCKEY || process.env.MAILCHIMP_API_KEY;
+const MAILCHIMP_LIST_ID = process.env.MCLID || process.env.MAILCHIMP_LIST_ID;
+const MAILCHIMP_DC = process.env.MCDC || process.env.MAILCHIMP_DC || 'us5';
 
 if (!MAILCHIMP_API_KEY || !MAILCHIMP_LIST_ID) {
-    console.error('Error: MAILCHIMP_API_KEY and MAILCHIMP_LIST_ID must be set in environment variables');
+    console.error('Error: Mailchimp credentials not found. Set MCKEY and MCLID (or MAILCHIMP_API_KEY and MAILCHIMP_LIST_ID).');
     process.exit(1);
 }
 
