@@ -1,13 +1,11 @@
 {
   "version": 2,
   "builds": [
-    { "src": "api.js", "use": "@vercel/node" },
     { "src": "newsletterlanding.html", "use": "@vercel/static" },
     { "src": "js/**", "use": "@vercel/static" },
     { "src": "**/*.{jpg,jpeg,png,webp,gif,svg,ico}" , "use": "@vercel/static" }
   ],
   "routes": [
-    { "src": "/api/subscribe", "dest": "/api.js" },
     { "src": "/(.*)", "dest": "/newsletterlanding.html" }
   ]
 }

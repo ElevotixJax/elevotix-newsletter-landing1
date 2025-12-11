@@ -260,32 +260,32 @@
 
     <script src="js/signup.js"></script>
     <script>
-        // Mailchimp API configuration
-        // Backend API endpoint (credentials hidden on server)
-        const API_ENDPOINT = '/api/subscribe';
+        // Google Sheets API endpoint (Apps Script Web App)
+        const API_ENDPOINT = 'https://script.google.com/macros/s/AKfycbyhqHGRoWBNx2_4aiLG9ooT1NsNqCi2UgJz8rlgdcxq2AcEP6UI0UKi9zcnpP0ktoCXZg/exec';
 
-        // Unified form handler with secure backend proxy
+        // Unified form handler for Google Sheets subscription
         async function handleFormSubmit(e){
             e.preventDefault();
             const form = e.target;
             const emailInput = form.querySelector('input[type="email"]');
             const email = emailInput.value.trim();
-            
+
             if(!email) return;
 
             // Get the submit button
             const btn = form.querySelector('button[type="submit"]');
             const originalText = btn.textContent;
-            
+
             // Show loading state
             btn.disabled = true;
             btn.textContent = 'Subscribing...';
             btn.setAttribute('aria-busy','true');
 
             try {
-                // Call secure backend proxy instead of direct API
+                // Call Google Apps Script endpoint
                 const response = await fetch(API_ENDPOINT, {
                     method: 'POST',
+                    mode: 'no-cors',
                     headers: {
                         'Content-Type': 'application/json'
                     },
@@ -294,30 +294,25 @@
                     })
                 });
 
-                if(response.ok){
-                    // Success
-                    btn.textContent = 'Subscribed! ✓';
-                    btn.style.background = 'linear-gradient(90deg, #22c55e, #16a34a)';
-                    emailInput.value = '';
-                    form.reset();
-                    
-                    // Revert after 2 seconds
-                    setTimeout(()=>{
-                        btn.disabled = false;
-                        btn.textContent = originalText;
-                        btn.style.background = '';
-                        btn.removeAttribute('aria-busy');
-                    }, 2000);
-                } else {
-                    const error = await response.json();
-                    throw new Error(error.detail || error.error || 'Subscription failed');
-                }
+                // With no-cors mode, we can't read the response, but if fetch didn't throw, assume success
+                btn.textContent = 'Subscribed! ✓';
+                btn.style.background = 'linear-gradient(90deg, #22c55e, #16a34a)';
+                emailInput.value = '';
+                form.reset();
+
+                // Revert after 2 seconds
+                setTimeout(()=>{
+                    btn.disabled = false;
+                    btn.textContent = originalText;
+                    btn.style.background = '';
+                    btn.removeAttribute('aria-busy');
+                }, 2000);
             } catch(err){
                 // Error handling
                 btn.textContent = 'Error! Try again';
                 btn.style.background = 'linear-gradient(90deg, #ef4444, #dc2626)';
                 console.error('Subscription error:', err);
-                
+
                 // Revert after 2 seconds
                 setTimeout(()=>{
                     btn.disabled = false;
