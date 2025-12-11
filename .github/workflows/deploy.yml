@@ -20,7 +20,3 @@ jobs:
           vercel-org-id: ${{ secrets.VERCEL_ORG_ID }}
           vercel-project-id: ${{ secrets.VERCEL_PROJECT_ID }}
           vercel-args: '--prod'
-        env:
-          MCKEY: ${{ secrets.MCKEY }}
-          MCDC: ${{ secrets.MCDC }}
-          MCLID: ${{ secrets.MCLID }}
