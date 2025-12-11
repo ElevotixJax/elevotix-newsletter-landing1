@@ -1,20 +1,14 @@
 {
   "name": "elevotix-newsletter-landing",
   "version": "1.0.0",
-  "description": "Elevotix Newsletter Landing Page with Mailchimp Integration",
-  "main": "api.js",
-  "scripts": {
-    "dev": "node api.js",
-    "start": "node api.js"
-  },
+  "description": "Elevotix Newsletter Landing Page with Google Sheets Integration",
   "keywords": [
     "elevotix",
-    "newsletter",
-    "mailchimp"
+    "newsletter"
   ],
   "author": "Elevotix",
   "license": "MIT",
   "engines": {
-    "node": "18.x"
+    "node": "20.x"
   }
 }
