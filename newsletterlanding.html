@@ -295,7 +295,9 @@
                 });
 
                 // With no-cors mode, we can't read the response, but if fetch didn't throw, assume success
-                btn.textContent = 'Subscribed! ✓';
+                // Show contextual success message based on button text
+                const successText = originalText.includes('Elevate') ? 'Elevated! ✓' : 'Subscribed! ✓';
+                btn.textContent = successText;
                 btn.style.background = 'linear-gradient(90deg, #22c55e, #16a34a)';
                 emailInput.value = '';
                 form.reset();
